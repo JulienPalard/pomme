@@ -16,6 +16,8 @@ def search():
     words = request.args.get("q", "").lower().split()
     lang = request.args.get("lang", "fr")
     result = {}
+    if not words or not lang:
+        return jsonify({})
     for msgid in index.get(words[0], []):
         msgid_lower = msgid.lower()
         if all(word in msgid_lower.split() for word in words):
