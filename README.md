@@ -1,6 +1,4 @@
-# Traduit un word point fr
-
-https://tuw.fr is a technical translation service.
+# TUW: Traduit Un Word
 
 To run it, use the following scripts, in that precise order:
 
@@ -12,7 +10,7 @@ To run it, use the following scripts, in that precise order:
 Then you can query the service like this:
 
 ```
-$ curl -s https://tuw.fr/search/?q=socket | json_pp | head
+$ curl -s http://localhost:8000/search/?q=socket | json_pp | head
 {
    "\n%s: -w option cannot use a relative socket directory specification\n" : {
       "\n%s : l'option -w ne peut pas utiliser un chemin relatif vers le répertoire de\nla socket\n" : {
