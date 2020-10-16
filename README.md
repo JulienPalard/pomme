@@ -28,5 +28,18 @@ $ curl -s http://localhost:8000/search/?q=socket | json_pp | head
    ...
 ```
 
+## Celery workers
+
+### Run the workers
+
+```
+celery -A pomme worker -E --loglevel=INFO -B --concurrency=1
+```
+
+### Call the task
+
+```
+celery -A pomme call pomme.tasks.crawl_github.index_python_docs_fr
+```
 
 Apple icon made by <a href="https://www.flaticon.com/free-icon/apple_3616363?term=apple&page=1&position=27" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
