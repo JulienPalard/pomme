@@ -31,7 +31,9 @@ def search_view():
                 {"rowid": result.rowid, "msgid": result.msgid, "msgstr": result.msgstr}
             )
         flash(f"Found {count} results for '{word}'", "success")
-        return render_template("search.html", form=form, results=result_list)
+        return render_template(
+            "search.html", form=form, results=result_list, search_word=word
+        )
     return render_template("search.html", form=form, results=None)
 
 

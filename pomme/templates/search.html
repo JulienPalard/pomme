@@ -25,7 +25,15 @@
             {% for entry in results %}
                 <tr>
                     <th scope="row">{{ entry.rowid }}</th>
-                    <td>{{ entry.msgid }}</td>
+                    <td>
+                        {% for word in entry.msgid.split(" ") %}
+                            {% if word == search_word %}
+                                <span style="color: red">{{ word }}</span>
+                            {% else %}
+                                {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     <td>{{ entry.msgstr }}</td>
                 </tr>
             {% endfor %}
