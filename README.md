@@ -1,4 +1,6 @@
-# TUW: Traduit Un Word
+![alt text](https://github.com/JulienPalard/tuw/blob/master/assets/logo/logo.png?raw=true)
+
+# Pome: Po Memory Database for open source documetation translators
 
 To run it, use the following scripts, in that precise order:
 
@@ -21,3 +23,6 @@ $ curl -s http://localhost:8000/search/?q=socket | json_pp | head
       },
    ...
 ```
+
+
+Apple icon made by <a href="https://www.flaticon.com/free-icon/apple_3616363?term=apple&page=1&position=27" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
