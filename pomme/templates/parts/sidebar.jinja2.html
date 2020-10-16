@@ -1,0 +1,23 @@
+{% block sidebar %}
+    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+        <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="{{ url_for('home.home_view') }}"><img class="img-fluid" src="../static/img/logo.png"></a>
+            <hr class="sidebar-divider my-0">
+            <strong class="text-light">Po Memory</strong>
+            <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                {% set navigation_bar = [
+                    (url_for("home.home_view"), 'home', 'Home', "fas fa-home"),
+                    (url_for("home.metrics_view"), 'metrics', 'Metrics', "fas fa-tachometer-alt"),
+                    (url_for("home.search_view"), 'search', 'Search', "fas fa-search"),
+                    (url_for("home.crawl_view"), 'crawl', 'Crawl', "fab fa-github"),
+                ]
+                        -%}
+                {% set active_page = active_page|default('index') -%}
+                {% for href, id, caption, icon in navigation_bar %}
+                    <li class="nav-item"><a {% if id == active_page %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ href|e }}"><i class="{{ icon }}"></i><span>{{ caption }}</span></a></li>
+                {% endfor %}
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
