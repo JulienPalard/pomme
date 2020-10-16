@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+{% include "parts/header.jinja2.html" %}
+
+{% block body %}
+    <body id="page-top">
+    <div id="wrapper">
+        {% include "parts/sidebar.jinja2.html" %}
+        <div class="d-flex flex-column" id="content-wrapper">
+            {% include "parts/navbar.jinja2.html" %}
+            {% block content %}
+            {% endblock %}
+            {% include "parts/footer.jinja2.html" %}
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    {% include "parts/scripts.jinja2.html" %}
+    </body>
+{% endblock %}
+
+</html>
