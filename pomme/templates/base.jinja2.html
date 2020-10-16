@@ -10,6 +10,7 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 {% include "parts/searchbar.jinja2.html" %}
+                {% include "parts/flashes.jinja2.html" %}
                 {% block content %}
                 {% endblock %}
             </div>
