@@ -1,10 +1,9 @@
 from flask import Blueprint
 from flask import flash
-from flask import redirect
 from flask import render_template
-from flask import url_for
 
 from pomme.forms.search import SearchForm
+from pomme.models.entry import Entry
 
 home_bp = Blueprint("home", __name__)
 
@@ -23,10 +22,17 @@ def metrics_view():
 def search_view():
     form = SearchForm()
     if form.validate_on_submit():
-        search_word = form.search_word.data
-        flash(search_word, "success")
-        return redirect(url_for("home.search_view"))
-    return render_template("search.html", form=form)
+        word = form.search_word.data
+        search_results = Entry.search(word)
+        count = search_results.count()
+        result_list = []
+        for result in search_results:
+            result_list.append(
+                {"rowid": result.rowid, "msgid": result.msgid, "msgstr": result.msgstr}
+            )
+        flash(f"Found {count} results for '{word}'", "success")
+        return render_template("search.html", form=form, results=result_list)
+    return render_template("search.html", form=form, results=None)
 
 
 @home_bp.route("/crawl", methods=["GET"])
