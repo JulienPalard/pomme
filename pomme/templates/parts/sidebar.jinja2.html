@@ -11,9 +11,15 @@
                     (url_for("home.crawl_view"), 'crawl', 'Crawl', "fab fa-github"),
                 ]
                         -%}
+
                 {% set active_page = active_page|default('index') -%}
                 {% for href, id, caption, icon in navigation_bar %}
-                    <li class="nav-item"><a {% if id == active_page %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ href|e }}"><i class="{{ icon }}"></i><span>{{ caption }}</span></a></li>
+                    <li class="nav-item">
+                        <a {% if id == active_page %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ href|e }}">
+                            <i class="{{ icon }}"></i>
+                            <span>{{ caption }}</span>
+                        </a>
+                    </li>
                 {% endfor %}
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
