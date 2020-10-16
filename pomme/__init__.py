@@ -4,6 +4,8 @@ import os
 from celery import Celery
 from dotenv import load_dotenv
 from flask import Flask
+from peewee import OperationalError
+from peewee import SqliteDatabase
 
 
 POMME_ROOT = os.path.join(os.path.dirname(__file__), "../")  # refers to repository root
@@ -17,6 +19,7 @@ REQUIRED_ENV_VARS = [
     "FLASK_SECRET_KEY",
     "CELERY_BROKER_URL",
     "CELERY_RESULT_BACKEND",
+    "GH_TOKEN",
 ]
 
 for item in REQUIRED_ENV_VARS:
@@ -41,6 +44,26 @@ else:
 application.secret_key = FLASK_SECRET_KEY
 application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)
 
+pomme_db = SqliteDatabase(database=POMME_ROOT + "/pomme.db")
+
+
+# Opens the DB connection before each request
+@application.before_request
+def open_db():
+    try:
+        pomme_db.connect()
+    except OperationalError:
+        pass
+
+
+# Closes the DB connection after each request
+@application.after_request
+def close_db(response):
+    if not pomme_db.is_closed():
+        pomme_db.close()
+    return response
+
+
 # Celery configuration
 application.config["CELERY_BROKER_URL"] = CELERY_BROKER_URL
 application.config["CELERY_RESULT_BACKEND"] = CELERY_RESULT_BACKEND
@@ -59,3 +82,8 @@ application.register_blueprint(home_bp)
 # import tasks here to be registered by celery
 
 import pomme.tasks  # noqa
+
+
+# Import models to be registered and created
+
+from pomme.models.entry import Entry  # noqa
