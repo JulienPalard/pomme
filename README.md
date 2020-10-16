@@ -1,6 +1,8 @@
-![alt text](https://github.com/JulienPalard/tuw/blob/master/assets/logo/logo.png?raw=true)
+<div style="text-align:center">
+    <img src="https://github.com/JulienPalard/tuw/blob/master/assets/logo/logo.png?raw=true" alt="Pomme logo"/>
+</div>
 
-# Pome: Po Memory Database for open source documetation translators
+# Pomme: Po Memory Database for open source documentation translators
 
 To run it, use the following scripts, in that precise order:
 
