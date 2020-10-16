@@ -2,6 +2,7 @@ from datetime import datetime
 
 import polib
 from github import Github
+from peewee import DoesNotExist
 
 from pomme import celery
 from pomme.models.entry import Entry
@@ -11,7 +12,7 @@ from pomme.static import GH_TOKEN
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     sender.add_periodic_task(
-        60, index_python_docs_fr.s(), name="Update online users every minute"
+        10, index_python_docs_fr.s(), name="Update online users every minute"
     )
 
 
@@ -25,17 +26,21 @@ def index_python_docs_fr():
     for file in root_files:
         if file.name.endswith(".po"):
             po_files.append(file)
+    count = 0
     for file in po_files:
-
         pofile = polib.pofile(file.decoded_content.decode("utf-8"))
-
         for entry in pofile:
-            Entry(
-                msgid=entry.msgid,
-                msgstr=entry.msgstr,
-                id_lang="en",
-                str_lang="fr",
-                crawl_timestamp=datetime.utcnow().timestamp(),
-                source_url=file.html_url,
-                license="CC0",
-            ).save()
+            try:
+                Entry.get(msgid=entry.msgid, msgstr=entry.msgstr)
+            except DoesNotExist:
+                Entry(
+                    msgid=entry.msgid,
+                    msgstr=entry.msgstr,
+                    id_lang="en",
+                    str_lang="fr",
+                    crawl_timestamp=datetime.utcnow().timestamp(),
+                    source_url=file.html_url,
+                    license="CC0",
+                ).save()
+                count += 1
+    return f"Successfully added/updated {count} entries."

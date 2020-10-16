@@ -65,8 +65,8 @@ def close_db(response):
 
 
 # Celery configuration
-application.config["CELERY_BROKER_URL"] = CELERY_BROKER_URL
-application.config["CELERY_RESULT_BACKEND"] = CELERY_RESULT_BACKEND
+application.config["CELERY_broker_url"] = CELERY_BROKER_URL
+application.config["result_backend"] = CELERY_RESULT_BACKEND
 
 logging.debug("Initializing Celery")
 # Initialize Celery
@@ -81,7 +81,7 @@ application.register_blueprint(home_bp)
 
 # import tasks here to be registered by celery
 
-import pomme.tasks  # noqa
+import pomme.tasks.crawl_github  # noqa
 
 
 # Import models to be registered and created
