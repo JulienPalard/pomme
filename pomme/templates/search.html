@@ -1,5 +1,15 @@
 {% extends "base.jinja2.html" %}
 {% set active_page = "search" %}
 {% block content %}
-    Hello !
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.search_word.label }}<br>
+            {{ form.search_word(size=32) }}<br>
+            {% for error in form.search_word.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
 {% endblock %}
