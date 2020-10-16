@@ -1,6 +1,6 @@
 import os
 
-from Pomme import application
+from pomme import application
 
 if __name__ == "__main__":
     # Get the port defined in env if defined, otherwise sets it to 5000

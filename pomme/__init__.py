@@ -25,7 +25,7 @@ for item in REQUIRED_ENV_VARS:
             f"{item} is not set in the server's environment or .env file. It is required."
         )
 
-from Pomme.static import FLASK_SECRET_KEY, CELERY_RESULT_BACKEND, CELERY_BROKER_URL
+from pomme.static import FLASK_SECRET_KEY, CELERY_RESULT_BACKEND, CELERY_BROKER_URL
 
 
 application = Flask(__name__)
@@ -51,11 +51,11 @@ celery = Celery(application.name, broker=CELERY_BROKER_URL)
 celery.conf.update(application.config)
 
 
-from Pomme.routes.views.home import home_bp
+from pomme.routes.views.home import home_bp
 
 application.register_blueprint(home_bp)
 
 
 # import tasks here to be registered by celery
 
-import Pomme.tasks  # noqa
+import pomme.tasks  # noqa
