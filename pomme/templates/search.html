@@ -6,6 +6,10 @@
         <p>
             {{ form.search_word.label }}<br>
             {{ form.search_word(size=32) }}<br>
+            {{ form.id_lang.label }}<br>
+            {{ form.id_lang }}<br>
+            {{ form.str_lang.label }}<br>
+            {{ form.str_lang }}<br>
             {% for error in form.search_word.errors %}
                 <span style="color: red;">{{ error }}</span>
             {% endfor %}

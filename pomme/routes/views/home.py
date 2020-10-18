@@ -21,9 +21,16 @@ def metrics_view():
 @home_bp.route("/search", methods=["GET", "POST"])
 def search_view():
     form = SearchForm()
+    # TODO: Optimize this with .distinct() if you can get it working
+    form.id_lang.choices = list(set([entry.id_lang for entry in Entry.select()]))
+    form.str_lang.choices = list(set([entry.str_lang for entry in Entry.select()]))
     if form.validate_on_submit():
         word = form.search_word.data
-        search_results = Entry.search(word)
+        id_lang = form.id_lang.data
+        str_lang = form.str_lang.data
+        search_results = Entry.search(word).where(
+            Entry.id_lang == id_lang, Entry.str_lang == str_lang
+        )
         count = search_results.count()
         result_list = []
         for result in search_results:
