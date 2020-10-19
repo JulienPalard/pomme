@@ -5,3 +5,5 @@ peewee==3.13.3
 PyGithub==1.53
 polib==1.1.0
 redis==3.5.3
+flask-wtf==0.14.3
+WTForms==2.3.3

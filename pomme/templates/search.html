@@ -1,5 +1,55 @@
 {% extends "base.jinja2.html" %}
 {% set active_page = "search" %}
 {% block content %}
-    Hello !
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.search_word.label }}<br>
+            {{ form.search_word(size=32) }}<br>
+            {{ form.id_lang.label }}<br>
+            {{ form.id_lang }}<br>
+            {{ form.str_lang.label }}<br>
+            {{ form.str_lang }}<br>
+            {% for error in form.search_word.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% if results %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">rowid</th>
+                <th scope="col">msgid</th>
+                <th scope="col">msgstr</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in results %}
+                <tr>
+                    <th scope="row">{{ entry.rowid }}</th>
+                    <td>
+                        {% for word in entry.msgid.split(" ") %}
+                            {% if word|lower == search_word|lower %}
+                                <span style="color: red">{{ word }}</span>
+                            {% else %}
+                                {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for word in entry.msgstr.split(" ") %}
+                            {% if word|lower == search_word|lower %}
+                                <span style="color: green">{{ word }}</span>
+                            {% else %}
+                                {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
